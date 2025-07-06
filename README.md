@@ -31,6 +31,19 @@ This is a full-stack weather application built with Next.js, featuring real-time
 
 ---
 
+## Default Users
+
+This application is seeded with a default admin user to allow for initial setup and testing.
+
+* **Admin User**
+    * **Email**: `rabia_admin@gmail.com`
+    * **Password**: `admin123`
+
+* **Example User**
+    * An example user with the email `rabia_user@gmail.com` and password `user123` created for example. Also more user can be created after deploying the application. Log in as the admin, navigate to the **Admin Panel**, and use the "Create New User" form.
+
+---
+
 ## Local Development Setup
 
 ### Prerequisites
@@ -42,8 +55,8 @@ This is a full-stack weather application built with Next.js, featuring real-time
 ### 1. Clone & Install
 
 ```bash
-git clone <your-repo-url>
-cd <project-folder>
+git clone https://github.com/rabiayrk/ready-to-weather/
+cd ready-to-weather
 npm install
 ```
 
@@ -62,17 +75,13 @@ Now, open the newly created `.env` file and fill in your secret values for the d
 This will start the PostgreSQL and Redis containers defined in `docker-compose.yml` and set up your database.
 
 ```bash
-# Start Docker services
 docker compose up -d
 
-# Apply database migrations
 npx prisma migrate dev
 
-# Build and run the database seed script
 npm run build:seed
 npx prisma db seed
 ```
-*Note: The seed script creates a default admin user. You can see or change the credentials in the `prisma/seed.ts` file.*
 
 ### 4. Run the Application
 
