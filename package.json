@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "build:seed": "tsc --project tsconfig.prisma.json",
-    "test": "jest"
+    "test": "jest",
+    "vercel-build": "npx prisma migrate deploy && npm run build:seed && npx prisma db seed && next build"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
