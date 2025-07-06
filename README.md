@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Weather Forecast API
 
-## Getting Started
+This is a full-stack weather application built with Next.js, featuring real-time forecasts, user authentication with role-based access control, and a high-performance caching layer.
 
-First, run the development server:
+---
+
+## Features
+
+* **User Authentication**: Secure sign-in system with JWT sessions via NextAuth.js.
+* **Role-Based Access Control (RBAC)**: Distinct `ADMIN` and `USER` roles.
+    * **Admins** can create new users and view all weather query history.
+    * **Users** can query for weather and view their own history.
+* **Real-time & Forecast Data**: Fetches current weather and a 5-day forecast from the **OpenWeather API**.
+* **Caching**: Uses **Redis** to cache API responses, improving performance and reducing external API calls.
+* **Database**: Uses **PostgreSQL** with **Prisma ORM** for type-safe database interactions.
+* **Modern UI**: A responsive, dark-themed UI built with Tailwind CSS.
+* **Testing**: Includes unit and integration tests with Jest.
+* **CI/CD**: A basic Continuous Integration pipeline with GitHub Actions to run tests automatically.
+
+---
+
+## Tech Stack
+
+* **Framework**: Next.js (App Router)
+* **Language**: TypeScript
+* **Database**: PostgreSQL
+* **ORM**: Prisma
+* **Caching**: Redis
+* **Authentication**: NextAuth.js
+* **Testing**: Jest
+
+---
+
+## Local Development Setup
+
+### Prerequisites
+
+* Node.js
+* Docker and Docker Compose
+* An API key from [OpenWeatherMap](https://openweathermap.org/)
+
+### 1. Clone & Install
+
+```bash
+git clone <your-repo-url>
+cd <project-folder>
+npm install
+```
+
+### 2. Configure Environment Variables
+
+Create your local environment file by copying the example file.
+
+```bash
+cp .env.example .env
+```
+
+Now, open the newly created `.env` file and fill in your secret values for the database, Redis, NextAuth, and the OpenWeather API key.
+
+### 3. Run Local Services & Database Setup
+
+This will start the PostgreSQL and Redis containers defined in `docker-compose.yml` and set up your database.
+
+```bash
+# Start Docker services
+docker compose up -d
+
+# Apply database migrations
+npx prisma migrate dev
+
+# Build and run the database seed script
+npm run build:seed
+npx prisma db seed
+```
+*Note: The seed script creates a default admin user. You can see or change the credentials in the `prisma/seed.ts` file.*
+
+### 4. Run the Application
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
+## Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This application is ready to be deployed to platforms like Vercel. When deploying:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1.  Import your Git repository into Vercel.
+2.  Use Vercel's integrations to create production **Postgres** and **KV (Redis)** stores.
+3.  Add all the necessary environment variables from your `.env.example` file to your Vercel project's settings, using the connection strings provided by Vercel's storage integrations.
