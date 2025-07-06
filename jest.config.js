@@ -13,7 +13,7 @@ module.exports = async () => {
   const jestConfig = await createJestConfig(customJestConfig)();
 
   jestConfig.transformIgnorePatterns = [
-    '/node_modules/(?!(@auth/prisma-adapter|next-auth|jose)/)',
+    '/node_modules/(?!(@next-auth/prisma-adapter|next-auth|jose)/)',
     '^.+\\.module\\.(css|sass|scss)$',
   ];
 

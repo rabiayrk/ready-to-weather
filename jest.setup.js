@@ -14,34 +14,17 @@ jest.mock('./src/lib/db', () => ({
   },
 }));
 
-jest.mock('@auth/prisma-adapter');
+jest.mock('@next-auth/prisma-adapter')
 jest.mock('next-auth');
 jest.mock('bcrypt');
+
+jest.mock('bcrypt', () => ({
+  hash: jest.fn().mockResolvedValue('hashed_password'),
+}));
+
 jest.mock('./src/services/weatherService');
 
 
-// jest.mock('@auth/prisma-adapter');
-
-// jest.mock('next-auth', () => ({
-//   getServerSession: jest.fn(),
-// }));
-
-// jest.mock('./src/lib/db', () => ({
-//   db: {
-//     weatherQuery: {
-//       create: jest.fn(),
-//     },
-//     user: {
-//       create: jest.fn(),
-//       findUnique: jest.fn(),
-//     },
-//   },
-// }));
-
-// jest.mock('bcrypt', () => ({
-//   hash: jest.fn().mockResolvedValue('hashed_password'),
-// }));
-
-// jest.mock('./src/services/weatherService', () => ({
-//   getForecastForCity: jest.fn(),
-// }));
+jest.mock('./src/services/weatherService', () => ({
+  getForecastForCity: jest.fn(),
+}));
