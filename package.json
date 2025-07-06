@@ -9,10 +9,10 @@
     "lint": "next lint",
     "build:seed": "tsc --project tsconfig.prisma.json",
     "test": "jest",
-    "vercel-build": "npx prisma migrate deploy && npm run build:seed && npx prisma db seed && next build"
+    "vercel-build": "npx prisma migrate deploy && npx prisma db seed && next build"
   },
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "seed": "ts-node --project tsconfig.prisma.json prisma/seed.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
